@@ -2,6 +2,8 @@
 
 /* jshint esversion: 6 */
 
+var poison = "&#9760;" ;
+
 class Holes {
     constructor() {
         this.item = document.getElementById("holes");
