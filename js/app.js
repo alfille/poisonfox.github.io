@@ -2,8 +2,6 @@
 
 /* jshint esversion: 6 */
 
-var poison = "&#9760;" ;
-
 class Holes {
     constructor() {
         this.item = document.getElementById("holes");
@@ -65,6 +63,7 @@ class Game {
     }
 
     move( holes ) { // holes is an array
+        console.log(holes);
         // inspections are 0-based
         this.inspections[this.date] = holes ;
         this.date += 1;
@@ -78,6 +77,14 @@ class Game {
             old_locations[h] = false ;
             old_stats[h] = 0. ;
             });
+
+        // exclude poisoned hole
+        if (this.date > 1) {
+            this.inspections[this.date-1].forEach( h => {
+                old_locations[h] = false ;
+                old_stats[h] = 0. ;
+                });
+        }
 
         let current_fox = Array(H.value).fill(false) ;
         let current_stats = Array(H.value).fill(0) ;
@@ -101,7 +108,7 @@ class Game {
     }
 
     get prior() {
-        return [this.inspections[this.date-1],this.fox_history[this.date-1]];
+        return [[this.inspections[this.date-1],this.inspections[this.date-2]],this.fox_history[this.date-1]];
     }
 
     back() { // backup a move
@@ -164,8 +171,8 @@ class Table {
             .querySelectorAll("input")]
             .filter( c=>c.checked )
             .map(c=>parseInt(c.getAttribute("data-n")));
-        if ( h.length == 2 ) {
-            T.move(h) ;
+        if ( h.length == 1 ) {
+            this.move(h) ;
         }
     }
 
@@ -228,18 +235,21 @@ class Table {
 
     static_row() {
         let [m,f] = G.prior ;
+        console.log(G.Prior);
         let r = document.createElement("tr");
         for ( let i = 0; i <= H.value ; ++i ) {
             let h = i-1; // actual hole index after first column
             let d = document.createElement("td");
             if ( i==0 ) {
                 d.innerHTML = `Day ${G.day-1}`;
-            } else if ( m.indexOf(h) > -1 ) {
-                d.innerHTML = "&#x274c" ;
+            } else if ( m.indexOf(h) == 0 ) {
+                d.innerHTML = "&#x274c" ; //X
+            } else if ( m.indexOf(h) == 1 ) {
+                d.innerHTML = "&#9760" ; //Poison
             } else if (f[h]) {
-                d.innerHTML = "&#129418" ;
+                d.innerHTML = "&#129418" ; //fox
             } else {
-                d.innerHTML = "&nbsp;" ;
+                d.innerHTML = "&nbsp;" ; //empty
             }
             r.appendChild(d);
         }
