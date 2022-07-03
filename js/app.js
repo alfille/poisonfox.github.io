@@ -78,14 +78,6 @@ class Game {
             old_stats[h] = 0. ;
             });
 
-        // exclude poisoned hole
-        if (this.date > 1) {
-            this.inspections[this.date-1].forEach( h => {
-                old_locations[h] = false ;
-                old_stats[h] = 0. ;
-                });
-        }
-
         let current_fox = Array(H.value).fill(false) ;
         let current_stats = Array(H.value).fill(0) ;
         
@@ -94,6 +86,13 @@ class Game {
             e.forEach( ee => current_fox[h] ||= old_locations[ee] );
             e.forEach( ee => current_stats[h] += old_stats[ee]/e.length );
         }
+
+        // exclude poisoned hole again (can't move into it)
+        holes.forEach( h => {
+            current_fox[h] = false ;
+            current_stats[h] = 0. ;
+            });
+
         // store
         this.fox_history[this.date] = current_fox;
         this.stats_history[this.date] = current_stats;
@@ -108,7 +107,7 @@ class Game {
     }
 
     get prior() {
-        return [[this.inspections[this.date-1],this.inspections[this.date-2]],this.fox_history[this.date-1]];
+        return [this.inspections[this.date-1]||[],this.inspections[this.date-2]||[],this.fox_history[this.date-1]];
     }
 
     back() { // backup a move
@@ -234,7 +233,7 @@ class Table {
     }
 
     static_row() {
-        let [m,f] = G.prior ;
+        let [m,p,f] = G.prior ;
         console.log(G.Prior);
         let r = document.createElement("tr");
         for ( let i = 0; i <= H.value ; ++i ) {
@@ -242,9 +241,9 @@ class Table {
             let d = document.createElement("td");
             if ( i==0 ) {
                 d.innerHTML = `Day ${G.day-1}`;
-            } else if ( m.indexOf(h) == 0 ) {
+            } else if ( m.indexOf(h) > -1 ) {
                 d.innerHTML = "&#x274c" ; //X
-            } else if ( m.indexOf(h) == 1 ) {
+            } else if ( p.indexOf(h) > -1 ) {
                 d.innerHTML = "&#9760" ; //Poison
             } else if (f[h]) {
                 d.innerHTML = "&#129418" ; //fox
