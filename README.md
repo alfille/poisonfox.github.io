@@ -1,6 +1,6 @@
 ![](images/icon.png)
 
-# Doublefox
+# Poisonfox
 
 This is an extension of the [Foxhole game](https://alfille.github.io/foxhole.github.io/) sent to me by my friend DSK.
 
@@ -13,7 +13,7 @@ This is an extension of the [Foxhole game](https://alfille.github.io/foxhole.git
 
 This program is a way to test strategies.
 
-The game is the catch a fox who must move between your hole inspections. The fox moves one hole in either direction. You can look at 2 holes each day.
+The game is the catch a fox who must move between your hole inspections. The fox moves one hole in either direction. You can look at 1 holes each day. The hole is "poisoned" and uninhabitable for a second day.
 
 ## Schrödinger's fox
 

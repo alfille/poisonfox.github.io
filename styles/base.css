@@ -1,0 +1,87 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: blue;
+    width: 100%;
+    height: 100%;
+}
+header {
+    background: lightblue;
+}
+header div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+header button {
+    background: lightgrey;
+    color: red;
+    width: 70%;
+    border: 3px solid blue;
+    border-radius: 4px;
+    margin: 2px;
+}
+#control {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: left;
+}
+table {
+    background: lightgrey;
+    width: 100%;
+}
+.working {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.switch {
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+}
+.switch button {
+    display: inline-block;
+}    
+.table {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute:
+    display: block;
+}
+.svg {
+    z-index: -1;
+    opacity: .8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    viewbox: 0 0 1000 1000;
+}
+.svg_container {
+    display: block;
+    z-index: 0;
+    opacity: .8;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+caption {
+    color: white;
+}
+table, th,td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+td {
+    text-align: center;
+}
