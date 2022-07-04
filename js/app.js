@@ -127,8 +127,8 @@ var G = new Game();
 class Table {
     constructor() {
         this.table = document.querySelector("table") ;
-        this.thead = document.querySelector("thead") ;
-        this.tbody = document.querySelector("tbody") ;
+        this.thead = this.table.querySelector("thead") ;
+        this.tbody = this.table.querySelector("tbody") ;
         this.stats = false;
         this.start() ;
     }
@@ -285,6 +285,29 @@ function changeInput() {
         T.start() ;
     }
 }
+
+class Overlay {
+	constructor () {
+		this.Garden( true ) ;
+	}
+	
+	Garden( onstate ) {
+		if ( onstate ) {
+			document.getElementById("svg").style.zIndex="1";
+			document.getElementById("Bgarden").style.backgroundColor = "white";
+			document.getElementById("Btable").style.backgroundColor = "grey";
+		} else {
+			document.getElementById("svg").style.zIndex="-1";
+			document.getElementById("Bgarden").style.backgroundColor = "grey";
+			document.getElementById("Btable").style.backgroundColor = "white";
+		}
+	}
+}
+var O = new Overlay();
+			
+		
+		
+
 
 // Application starting point
 window.onload = () => {

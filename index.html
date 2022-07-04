@@ -29,12 +29,12 @@
             </div>
         </header>
         <div class="working">
-            <div class="switch">
-                <button type="button" class="active" onclick="Switch()" title="Table view">&#128462</button>
-                <button type="button" onclick="Switch()" title="Garden view">&#127969</button>
+            <div id="switch">
+                <button type="button" id="Btable" onclick="O.Garden(false)" title="Table view">&#128196;</button>
+                <button type="button" id="Bgarden" onclick="O.Garden(true)" title="Garden view">&#127969;</button>
             </div>
-            <div class="table">
-                <table id="Ttable" position=absolute>
+            <div id="Ttable">
+                <table>
                     <caption>
                         Poisonfox game play
                     </caption>
@@ -44,14 +44,11 @@
                     </tbody>
                 </table>
             </div>
-            <div class="svg_contaner">
-                <svg class="svg">
-                    <rect width="400" height="610" style="fill:rgb(0,0,255);stroke-width:10;stroke:rgb(0,0,0)" />  
-                    <circle cx="150" cy="40" r="40" stroke="black" stroke-width="3" fill="red" />
-                    <circle cx="0" cy="0" r="400" stroke="black" stroke-width="3" fill="red" />
-                    Sorry, your browser does not support inline SVG.  
-                </svg>         
-            </div>
+			<svg id="svg" viewBox="-1000 -1000 2000 2000">
+				<rect width="1000" height="1000" style="fill:rgb(0,0,255);" />  
+				<circle cx="0" cy="0" r="400" stroke="grey" stroke-width="1" fill="limegreen" />
+				Sorry, your browser does not support inline SVG.  
+			</svg>         
         </div>
         <!-- scripts -->
         <!-- application code --> <script src="js/app.js"></script>
