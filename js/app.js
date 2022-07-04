@@ -124,6 +124,45 @@ class Game {
 }
 var G = new Game();
 
+class GardenView {
+    constructor() {
+        this.svg = document.getElementById("svg");
+        this.show() ;
+    }
+
+    create_svg() {
+        let f = G.foxes;
+        let Th = f.map( (_,i) => `<use href="#svg_hole" transform="rotate(${360.*i/f.length})" />`).join(" ");
+        let Tf = f.map( (ff,i) => `<use href=${ff?"#svg_fox":"#svg_nofox"} transform="rotate(${360.*i/f.length})" />`).join(" ");
+        let Tl = f.map( (ff,i) => `<use href=${ff?"#svg_larrow":"#svg_nofox"} transform="rotate(${360.*i/f.length})" />`).join(" ");
+        let Tr = f.map( (ff,i) => `<use href=${ff?"#svg_rarrow":"#svg_nofox"} transform="rotate(${360.*i/f.length})" />`).join(" ");
+        return `
+        <svg viewBox="-1000 -1000 2000 2000">
+            <rect width="1000" height="1000" style="fill:rgb(0,0,255);" />  
+            <circle cx="0" cy="0" r="803" stroke="grey" stroke-width="3" fill="none" />
+            <circle cx="0" cy="0" r="797" stroke="grey" stroke-width="3" fill="none" />
+            <def>
+                <circle id="svg_hole" cx="0" cy="800" r="150" stroke="black" stroke-width="10" fill="tan" />
+                <text id="svg_fox" x="125" y="740" fill="black" font-size="200" rotate="180">&#129418;</text>
+                <text id="svg_nofox" x="125" y="740" fill="black" font-size="200" rotate="180">&nbsp;</text>
+                <text id="svg_rarrow" x="100" y="790" font-size="200" fill="red" rotate="-15">&#8594;</text>
+                <text id="svg_larrow" x="-300" y="740" font-size="200" fill="red" rotate="15">&#8592;</text>
+            </def>
+            ${Th}
+            ${Tf}
+            ${Tl}
+            ${Tr}
+            Sorry, your browser does not support inline SVG.  
+        </svg>
+        ` ;
+    }
+
+    show() {
+        this.svg.innerHTML = this.create_svg() ;
+    }
+}
+var GV = new GardenView();
+
 class Table {
     constructor() {
         this.table = document.querySelector("table") ;
@@ -197,6 +236,7 @@ class Table {
         }
         let d = document.createElement("td");
         this.tbody.appendChild(r);
+        GV.show();
     }
 
     back() {
@@ -278,7 +318,11 @@ class Table {
     }
     
 }
-var T = new Table();            
+var T = new Table();
+
+
+
+             
 
 function changeInput() {
     if ( H.change ) {

@@ -77,7 +77,8 @@ table {
     z-index: 0;
 }
 #svg {
-    opacity: .9;
+    background-color: blue;
+    opacity: .8;
     position: absolute;
     top: 0;
     left: 0;
