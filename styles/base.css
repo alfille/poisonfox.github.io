@@ -86,6 +86,31 @@ table {
     height: 100%;
     z-index: 1;
 }
+#svg_hole {
+    fill: tan;
+    stroke: black;
+    stroke-width: 10;
+}
+#old_hole {
+    fill: #FFCCFF;
+    stroke: purple;
+    stroke-width: 4;
+} 
+.svg_fox {
+    fill: black;
+    font-size: 200px;
+}
+.old_fox {
+    fill: black;
+    font-size: 66px;
+}
+#svg_rarrow, #svg_larrow {
+    fill: red;
+    font-size: 200px;
+}
+#svg_click {
+    fill: transparent;
+}
 caption {
     color: white;
 }
