@@ -63,7 +63,6 @@ class Game {
     }
 
     move( holes ) { // holes is an array
-        console.log(holes);
         // inspections are 0-based
         this.inspections[this.date] = holes ;
         this.date += 1;
@@ -127,6 +126,8 @@ var G = new Game();
 class GardenView {
     constructor() {
         this.svg = document.getElementById("svg");
+        this.head = document.getElementById("top");
+        window.onresize = this.dimension_control();
     }
 
     start() {
@@ -149,7 +150,7 @@ class GardenView {
         if ( this.history.length == 0 ) {
             return "";
         }
-        return this.history.reduce( (t,x) => `<g transform="scale(.83)">${t}</g>${x}` );
+        return this.history.reduce( (t,x) => `<g transform="scale(.86) rotate(5)">${t}</g>${x}` );
     }
 
     create_svg(s) {
@@ -158,8 +159,8 @@ class GardenView {
         let Tf = s.map( (ss,i) => `<g transform="rotate(${360.*i/s.length})"><text class="svg_fox" x="125" y="740" rotate="180">${ss}</text></g>`).join("");
         let Tl = f.map( (ff,i) => `<use href=${ff?"#svg_larrow":"#svg_nofox"} transform="rotate(${360.*i/f.length})" />`).join("");
         let Tr = f.map( (ff,i) => `<use href=${ff?"#svg_rarrow":"#svg_nofox"} transform="rotate(${360.*i/f.length})" />`).join("");
-        let Tc = s.map( (_,i) => `<use href="#svg_click" data-hole=${i+""} id=${"top_"+i} transform="rotate(${360.*i/s.length})" />`).join("");
-        return `<svg viewBox="-1000 -1000 2000 2000">
+        let Tc = s.map( (_,i) => `<circle class="svg_click" cx="0" cy="800" r="150" id=${"top_"+i} transform="rotate(${360.*i/s.length})" onmouseover="this.style.stroke='red'" onmouseout="this.style.stroke='black'"/>`).join("");
+        return `<svg viewBox="-1000 -1000 2000 2000"> preserveAspectRatio="xMidYMid meet" width="100%"
             <circle cx="0" cy="0" r="803" stroke="grey" stroke-width="3" fill="none" />
             <circle cx="0" cy="0" r="797" stroke="grey" stroke-width="3" fill="none" />
             <def>
@@ -174,13 +175,25 @@ class GardenView {
             ${Tr}
             ${Tc}
             ${this.show_history()}
+            <rect id="bottom_back" />
+            <text id="text_back" x="720" y="-870">Back</text />
+            <rect id="top_back"  onmouseover="this.style.stroke='red'" onmouseout="this.style.stroke='black'"/>
             Sorry, your browser does not support inline SVG.  
         </svg>` ;
     }
 
+    dimension_control() {
+        let x = Math.min(this.svg.clientWidth,window.innerHeight-this.head.offsetHeight);
+        this.svg.style.width = x+"px";
+        this.svg.style.height = x+"px";
+    }
+
+
     control_row(symbol_list) {
         this.svg.innerHTML = this.create_svg(symbol_list) ;
         this.svg.onload = G.foxes.forEach( (_,i)=>document.getElementById("top_"+i).addEventListener('click', (e) => T.click(e.target.id.split('_')[1]) ));
+        this.svg.onload = document.getElementById("top_back").addEventListener('click', (e) => T.back() );
+        this.svg.onload = this.dimension_control() ;
     }
 }
 var GV = new GardenView();
@@ -276,6 +289,7 @@ class Table {
             this.remove_row();
             this.remove_row();
             G.back();
+            GV.back();
             this.control_row();
         }
         this.update();
